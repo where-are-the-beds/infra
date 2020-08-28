@@ -26,3 +26,11 @@ This project uses git submodules to deploy api and web from infra repo.
 ```
 git submodule update --remote <submodule_name>
 ```
+
+### How to revert changes to submodule directories
+```
+git submodule foreach git reset --hard HEAD
+git submodule update
+git submodule foreach "git checkout master; git pull"
+git submodule foreach git clean -f
+```
