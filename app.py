@@ -14,8 +14,8 @@ class WhereAreTheBedsStack(core.Stack):
         cluster = ecs.Cluster(self, 'WhereAreTheBedsStack-cluster', vpc=vpc)
         fargate = ecs_patterns.ApplicationLoadBalancedFargateService(self, 'WhereAreTheBedsStack-fargate',cluster=cluster,
             task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
-                # image=ecs.ContainerImage.from_asset(path.join(path.dirname(__file__), 'api')),
-                image=ecs.ContainerImage.from_registry("amazon/amazon-ecs-sample")),
+                image=ecs.ContainerImage.from_asset(path.join(path.dirname(__file__), 'api'))),
+                # image=ecs.ContainerImage.from_registry("amazon/amazon-ecs-sample")),
             public_load_balancer=True)
 
 app = core.App()
