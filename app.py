@@ -10,13 +10,23 @@ class WhereAreTheBedsStack(core.Stack):
     def __init__(self, scope, name, **kwargs):
         super().__init__(scope, name, **kwargs)
         
-        vpc = ec2.Vpc(self, 'WhereAreTheBedsStack-vpc')
+        vpc = ec2.Vpc(self, 'WhereAreTheBedsStack-vpc', max_azs=2)
+
         cluster = ecs.Cluster(self, 'WhereAreTheBedsStack-cluster', vpc=vpc)
-        fargate = ecs_patterns.ApplicationLoadBalancedFargateService(self, 'WhereAreTheBedsStack-fargate',cluster=cluster,
+                
+        fargate = ecs_patterns.ApplicationLoadBalancedFargateService(self, 'WhereAreTheBedsStack-fargate',
+            cluster=cluster,
             task_image_options=ecs_patterns.ApplicationLoadBalancedTaskImageOptions(
-                image=ecs.ContainerImage.from_asset(path.join(path.dirname(__file__), 'api'))),
-                # image=ecs.ContainerImage.from_registry("amazon/amazon-ecs-sample")),
-            public_load_balancer=True)
+                image=ecs.ContainerImage.from_asset(path.join(path.dirname(__file__), 'api')),
+                container_port=80
+            )
+        )
+
+        core.CfnOutput(
+            self, "WhereAreTheBedsStack-dns",
+            value=fargate.load_balancer.load_balancer_dns_name
+        )
+
 
 app = core.App()
 WhereAreTheBedsStack(app, 'WhereAreTheBeds')
