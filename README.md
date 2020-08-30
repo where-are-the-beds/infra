@@ -34,3 +34,9 @@ git submodule update
 git submodule foreach "git checkout master; git pull"
 git submodule foreach git clean -f
 ```
+
+### How to delete submodule directories
+```
+git rm -f submodule/
+rm -rf .git/modules/submodule/
+```
