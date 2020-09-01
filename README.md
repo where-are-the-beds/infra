@@ -1,5 +1,17 @@
 ## This project allows user to track availability of hospital beds in the US
 
+### System Architecture
+
+![System Architecture](system-architecture.png)
+
+### Technologies Used
+```
+AWS CDK: Provision cloud infrastructure
+AWS Application Load Balancer: Interact with clients
+AWS Fargate Task: Serverless compute engine for containers
+AWS S3: Store objects
+```
+
 ### How to run locally
 ```
 1. Build and activate a virtual environment: 
